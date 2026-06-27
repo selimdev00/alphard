@@ -1,56 +1,84 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
   <%- include('config/head') %>
-  <body>
-    <main>
-      <section
-        class="home-section"
-        id="home-landing-section"
-        style="background-image: url('/images/home/home-landing-bg-image.jpg')"
-      >
-        <div class="container">
-          <div id="home-landing-wrapper">
-            <div id="home-landing-title">
-              <h2>welcome to the world of</h2>
-              <h1>Astronomia</h1>
-            </div>
+  <body data-page="home">
+    <a class="skip-link" href="#main">Перейти к содержимому</a>
+    <%- include('components/header', { planets: planets }) %>
+
+    <main id="main">
+      <section class="hero" id="hero">
+        <div class="hero__grid">
+          <p class="eyebrow" data-reveal>Обсерватория в браузере</p>
+          <h1 class="hero__title" data-reveal>Astronomia</h1>
+          <p class="hero__lede" data-reveal>
+            Девять миров Солнечной системы - в трёхмерных моделях, телеметрии и фактах.
+            Откройте порт наблюдения и рассмотрите каждую планету вблизи.
+          </p>
+          <div class="hero__actions" data-reveal>
+            <a class="btn btn--primary" href="#index">Смотреть планеты</a>
+            <a class="btn btn--ghost" href="/planets/earth">Начать с Земли</a>
           </div>
+          <dl class="hero__stats" data-reveal>
+            <div><dt>Планет и карликов</dt><dd>09</dd></div>
+            <div><dt>Звезда системы</dt><dd>01</dd></div>
+            <div><dt>3D-моделей</dt><dd>09</dd></div>
+          </dl>
+        </div>
+        <div class="hero__scroll" aria-hidden="true">
+          <span class="mono">scroll</span>
+          <span class="hero__scroll-line"></span>
         </div>
       </section>
 
-      <section class="home-section" id="home-planets-section">
-        <div class="container">
-          <div id="home-planets-wrapper">
-            <div id="home-planets-title">
-              <h2>Expore the</h2>
-              <h1>planets</h1>
-            </div>
-            <div id="home-planets-grid">
-              <% for (let i = 0; i < planets.length; i++) { %>
-              <div class="home-planets-grid-item">
+      <section class="index-section" id="index" aria-labelledby="index-heading">
+        <div class="section-head">
+          <p class="eyebrow" data-reveal>Орбитальный индекс</p>
+          <h2 id="index-heading" data-reveal>Исследуйте планеты</h2>
+          <p class="section-head__sub" data-reveal>
+            От раскалённого Меркурия до ледяного Плутона. Наведите курсор, чтобы зажечь
+            порт наблюдения, и откройте мир целиком.
+          </p>
+        </div>
+
+        <ul class="planet-grid" role="list">
+          <% planets.forEach(function (p) { %>
+          <li>
+            <a class="planet-card" href="/planets/<%= p.slug %>" style="--accent: <%= p.accent %>" data-reveal>
+              <div class="obs-port">
                 <model-viewer
-                  src="/images/planets/<%= planets[i].modelName %>"
-                  alt="A 3D model of an astronaut"
+                  class="obs-port__model"
+                  src="/images/planets/<%= p.modelName %>"
+                  alt="Трёхмерная модель планеты <%= p.name %>"
                   auto-rotate
-                  camera-controls
+                  rotation-per-second="12deg"
+                  interaction-prompt="none"
                   disable-zoom
-                  style="height: 250px"
+                  loading="lazy"
+                  reveal="auto"
+                  style="background: transparent"
                 ></model-viewer>
-                <a href="/planets/<%= planets[i].name %>"
-                  ><h2><%= planets[i].name %></h2></a
-                >
-                <% if (planets[i].notAPlanet) { %>
-                <div class="home-planets-grid-item-not-a-planet">
-                  <span>Not a planet anymore</span>
-                </div>
+                <span class="obs-port__skeleton" aria-hidden="true"></span>
+                <span class="obs-port__caption mono" aria-hidden="true">
+                  <span><%= p.slug.toUpperCase() %></span>
+                  <span>OBS · <%= String(p.index).padStart(2, "0") %></span>
+                </span>
+                <% if (p.notAPlanet) { %>
+                <span class="badge">Карликовая планета</span>
                 <% } %>
               </div>
-              <% } %>
-            </div>
-          </div>
-        </div>
+              <div class="planet-card__body">
+                <span class="planet-card__idx mono"><%= String(p.index).padStart(2, "0") %></span>
+                <h3 class="planet-card__name"><%= p.name %></h3>
+                <p class="planet-card__tagline"><%= p.tagline %></p>
+                <span class="planet-card__group mono"><%= p.group %></span>
+              </div>
+            </a>
+          </li>
+          <% }); %>
+        </ul>
       </section>
     </main>
+
     <%- include('components/footer') %>
   </body>
 </html>

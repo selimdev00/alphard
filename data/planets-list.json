@@ -1,13 +1,86 @@
 {
-    "planets": [
-        { "name": "Mercury", "modelName": "mercury.glb" },
-        { "name": "Venus", "modelName": "venus.glb" },
-        { "name": "Earth", "modelName": "earth.glb" },
-        { "name": "Mars", "modelName": "mars.glb" },
-        { "name": "Jupiter", "modelName": "jupiter.glb" },
-        { "name": "Saturn", "modelName": "saturn.glb" },
-        { "name": "Uranus", "modelName": "uranus.glb" },
-        { "name": "Neptune", "modelName": "neptune.glb" },
-        { "name": "Pluto", "modelName": "pluto.glb", "notAPlanet": true }
-      ]
+  "planets": [
+    {
+      "slug": "mercury",
+      "name": "Меркурий",
+      "modelName": "mercury.glb",
+      "accent": "oklch(0.74 0.035 70)",
+      "group": "Планета земной группы",
+      "tagline": "Раскалённый карлик у Солнца",
+      "index": 1
+    },
+    {
+      "slug": "venus",
+      "name": "Венера",
+      "modelName": "venus.glb",
+      "accent": "oklch(0.83 0.12 88)",
+      "group": "Планета земной группы",
+      "tagline": "Адская сестра под облаками",
+      "index": 2
+    },
+    {
+      "slug": "earth",
+      "name": "Земля",
+      "modelName": "earth.glb",
+      "accent": "oklch(0.70 0.13 235)",
+      "group": "Планета земной группы",
+      "tagline": "Голубая колыбель жизни",
+      "index": 3
+    },
+    {
+      "slug": "mars",
+      "name": "Марс",
+      "modelName": "mars.glb",
+      "accent": "oklch(0.66 0.16 38)",
+      "group": "Планета земной группы",
+      "tagline": "Ржавый мир пыльных бурь",
+      "index": 4
+    },
+    {
+      "slug": "jupiter",
+      "name": "Юпитер",
+      "modelName": "jupiter.glb",
+      "accent": "oklch(0.76 0.085 65)",
+      "group": "Газовый гигант",
+      "tagline": "Газовый гигант с вечной бурей",
+      "index": 5
+    },
+    {
+      "slug": "saturn",
+      "name": "Сатурн",
+      "modelName": "saturn.glb",
+      "accent": "oklch(0.83 0.105 92)",
+      "group": "Газовый гигант",
+      "tagline": "Властелин ледяных колец",
+      "index": 6
+    },
+    {
+      "slug": "uranus",
+      "name": "Уран",
+      "modelName": "uranus.glb",
+      "accent": "oklch(0.81 0.09 198)",
+      "group": "Ледяной гигант",
+      "tagline": "Ледяной гигант, лежащий на боку",
+      "index": 7
+    },
+    {
+      "slug": "neptune",
+      "name": "Нептун",
+      "modelName": "neptune.glb",
+      "accent": "oklch(0.68 0.14 258)",
+      "group": "Ледяной гигант",
+      "tagline": "Синий мир штормовых ветров",
+      "index": 8
+    },
+    {
+      "slug": "pluto",
+      "name": "Плутон",
+      "modelName": "pluto.glb",
+      "accent": "oklch(0.74 0.06 322)",
+      "group": "Карликовая планета",
+      "tagline": "Ледяное сердце пояса Койпера",
+      "index": 9,
+      "notAPlanet": true
+    }
+  ]
 }

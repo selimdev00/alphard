@@ -1,16 +1,19 @@
 <head>
   <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Astronomia</title>
-  <link
-    rel="stylesheet"
-    href="/@fortawesome/fontawesome-free/css/all.min.css"
+  <title><%= typeof pageTitle !== "undefined" ? pageTitle : "Astronomia" %></title>
+  <meta
+    name="description"
+    content="<%= typeof pageDescription !== 'undefined' ? pageDescription : 'Astronomia - интерактивный путеводитель по планетам Солнечной системы: трёхмерные модели, телеметрия и факты о каждом мире.' %>"
   />
+  <meta name="theme-color" content="#0c0e1a" />
+  <meta name="color-scheme" content="dark" />
+
+  <link rel="preload" href="/fonts/GolosText-400-cyrillic.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/Unbounded-800-cyrillic.woff2" as="font" type="font/woff2" crossorigin />
+
   <link rel="stylesheet" href="/css/main.css" />
-  <script
-    type="module"
-    src="/@google/model-viewer/dist/model-viewer.min.js"
-    crossorigin="anonymous"
-  ></script>
+
+  <script type="module" src="/vendor/model-viewer/model-viewer.min.js"></script>
+  <script src="/js/app.js" defer></script>
 </head>

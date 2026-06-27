@@ -1,55 +1,107 @@
 <!DOCTYPE html>
-<html lang="en">
-  <%- include('config/head') %>
-  <body>
-    <main>
-      <section
-        class="planet-section"
-        id="planet-landing-section"
-        style="background-image: url('/images/home/home-landing-bg-image.jpg')"
-      >
-        <div class="container">
-          <div id="planet-landing-wrapper">
-            <a href="/">
-              <div id="planet-link-to-home-page">
-                <p><i class="fa fa-home"></i></p>
-              </div>
-            </a>
-            <a href="#planet-info-section">
-              <div id="planet-link-to-info-section">
-                <p><i class="fa fa-chevron-circle-down"></i></p>
-              </div>
-            </a>
-            <div id="planet-model">
-              <model-viewer
-                src="/images/planets/<%= planetModelName %>.glb"
-                alt="A 3D model of an astronaut"
-                auto-rotate
-                camera-controls
-                style="height: 100vh; width: 100vw"
-              ></model-viewer>
-            </div>
-            <div id="planet-landing-title">
-              <h2>welcome to the world of</h2>
-              <h1><%= planetName %></h1>
-            </div>
+<html lang="ru">
+  <%- include('config/head', { pageTitle: pageTitle, pageDescription: planet.name + ' - ' + content.tagline + '. Трёхмерная модель, телеметрия и факты в путеводителе Astronomia.' }) %>
+  <body data-page="planet" data-planet="<%= planet.slug %>" style="--accent: <%= planet.accent %>">
+    <a class="skip-link" href="#main">Перейти к содержимому</a>
+    <%- include('components/header', { planets: planets, current: planet.slug }) %>
+
+    <main id="main">
+      <section class="planet-hero" aria-labelledby="planet-title">
+        <div class="planet-hero__inner">
+          <div class="planet-hero__port obs-port obs-port--large">
+            <model-viewer
+              class="obs-port__model"
+              src="/images/planets/<%= planet.modelName %>"
+              alt="Интерактивная трёхмерная модель планеты <%= planet.name %>"
+              auto-rotate
+              rotation-per-second="10deg"
+              camera-controls
+              interaction-prompt="none"
+              touch-action="pan-y"
+              loading="eager"
+              style="background: transparent"
+            ></model-viewer>
+            <span class="obs-port__skeleton" aria-hidden="true"></span>
+            <span class="obs-port__caption mono" aria-hidden="true">
+              <span><%= planet.slug.toUpperCase() %></span>
+              <span>МОДЕЛЬ · 360°</span>
+            </span>
+          </div>
+
+          <div class="planet-hero__intro">
+            <nav class="breadcrumb mono" aria-label="Хлебные крошки">
+              <a href="/">Главная</a>
+              <span aria-hidden="true">/</span>
+              <span aria-current="page"><%= planet.name %></span>
+            </nav>
+            <p class="eyebrow"><%= planet.group %> · № <%= String(planet.index).padStart(2, "0") %></p>
+            <h1 class="planet-hero__title" id="planet-title"><%= planet.name %></h1>
+            <p class="planet-hero__tagline"><%= content.tagline %></p>
+
+            <nav class="pager" aria-label="Соседние планеты">
+              <a class="pager__btn" href="/planets/<%= prev.slug %>" rel="prev">
+                <span class="pager__dir mono" aria-hidden="true">← пред.</span>
+                <span class="pager__name"><%= prev.name %></span>
+              </a>
+              <a class="pager__btn pager__btn--next" href="/planets/<%= next.slug %>" rel="next">
+                <span class="pager__dir mono" aria-hidden="true">след. →</span>
+                <span class="pager__name"><%= next.name %></span>
+              </a>
+            </nav>
           </div>
         </div>
       </section>
 
-      <section class="planet-section" id="planet-info-section">
-        <div class="container">
-          <div id="planet-info-wrapper">
-            <div id="planet-info-title">
-              <h2>Info about</h2>
-              <h1><%= planetName %></h1>
+      <section class="planet-body">
+        <aside class="readout" aria-label="Телеметрия планеты <%= planet.name %>" data-reveal>
+          <h2 class="readout__heading mono">Телеметрия</h2>
+          <dl class="readout__grid">
+            <% var rows = [
+              ['Расстояние от Солнца', content.data.distance],
+              ['Диаметр', content.data.diameter],
+              ['Масса', content.data.mass],
+              ['Орбитальный период', content.data.orbit],
+              ['Сутки', content.data.day],
+              ['Спутники', content.data.moons],
+              ['Средняя температура', content.data.temp]
+            ]; %>
+            <% rows.forEach(function (r) { %>
+            <div class="readout__row">
+              <dt><%= r[0] %></dt>
+              <dd class="mono"><%= r[1] %></dd>
             </div>
+            <% }); %>
+          </dl>
+        </aside>
 
-            <div id="planet-info-content"><%- planetContent %></div>
+        <article class="prose" data-reveal>
+          <% content.intro.forEach(function (para, idx) { %>
+          <p<%= idx === 0 ? ' class="prose__lead"' : "" %>><%= para %></p>
+          <% }); %>
+
+          <div class="facts">
+            <h2 class="facts__heading mono">Знаете ли вы</h2>
+            <ul class="facts__list" role="list">
+              <% content.facts.forEach(function (f) { %>
+              <li><%= f %></li>
+              <% }); %>
+            </ul>
           </div>
-        </div>
+        </article>
       </section>
+
+      <nav class="pager pager--wide" aria-label="Навигация по планетам">
+        <a class="pager__btn" href="/planets/<%= prev.slug %>" rel="prev" style="--accent: <%= prev.accent %>">
+          <span class="pager__dir mono" aria-hidden="true">← предыдущая</span>
+          <span class="pager__name"><%= prev.name %></span>
+        </a>
+        <a class="pager__btn pager__btn--next" href="/planets/<%= next.slug %>" rel="next" style="--accent: <%= next.accent %>">
+          <span class="pager__dir mono" aria-hidden="true">следующая →</span>
+          <span class="pager__name"><%= next.name %></span>
+        </a>
+      </nav>
     </main>
+
     <%- include('components/footer') %>
   </body>
 </html>
